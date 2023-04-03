@@ -1,3 +1,4 @@
+python3-discogs-client
 fastapi[all]
 jinja2
 jinja2-fragments

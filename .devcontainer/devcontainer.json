@@ -15,7 +15,8 @@
             "bradlc.vscode-tailwindcss",
             "otovo-oss.htmx-tags",
             "ms-vscode.vscode-node-azure-pack",
-            "wholroyd.jinja"
+            "wholroyd.jinja",
+            "ms-azuretools.vscode-bicep"
         ]
     }
 },
