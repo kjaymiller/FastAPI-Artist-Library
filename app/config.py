@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     DATA_DIR: Path = APP_DIR.parent / "data"
 
     FASTAPI_PROPERTIES = {
-        "title": "Simple Site",
+        "title": "Audio Library",
         "description": "A simple htmx and tailwind site built with FastAPI",
         "version": "0.0.1",
         "default_response_class": HTMLResponse,  # Change default from JSONResponse
