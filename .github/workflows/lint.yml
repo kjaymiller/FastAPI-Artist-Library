@@ -19,8 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_PAT}}
       - uses: actions/setup-python@v4
         with:
           python-version: 3.11
@@ -41,5 +39,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
-          git commit -m "Linting ${github.event_name}"
+          git commit -m "Linting ${{ github.event_name }}"
           git push
