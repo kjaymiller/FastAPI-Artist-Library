@@ -8,7 +8,6 @@ from app.config import Settings
 settings = Settings()
 
 
-
 class CRUD:
     def __init__(self, db: TinyDB | None = None, table: str | None = None):
         self.db = db
@@ -17,7 +16,7 @@ class CRUD:
 
     def all_items(self):
         if not self.db:
-            self.init_db
+            self.db = self.init_db
         if self.table:
             self.db = self.table
         return self.db.all()
@@ -34,7 +33,7 @@ class CRUD:
         return self.table.insert(data)
 
     def add(self, key: str, value: str):
-        q = getattr(self.query, key)
+        getattr(self.query, key)
         if not self.table:
             return self.db.insert({key: value})
         return self.table.insert({key: value})
@@ -51,7 +50,6 @@ class CRUD:
             return self.db.get(doc_id=num)
         num = randint(0, len(self.table))
         return self.table.get(doc_id=num)
-
 
     @property
     def init_db(self):

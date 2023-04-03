@@ -10,6 +10,7 @@ from app.routes import router
 
 settings = Settings()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Context manager for FastAPI app. It will run all code before `yield`
@@ -17,13 +18,15 @@ async def lifespan(app: FastAPI):
     """
 
     try:
-        subprocess.run([
-            "tailwindcss",
-            "-i",
-            str(settings.STATIC_DIR / "src" / "tw.css"),
-            "-o",
-            str(settings.STATIC_DIR / "css" / "main.css"),
-        ])
+        subprocess.run(
+            [
+                "tailwindcss",
+                "-i",
+                str(settings.STATIC_DIR / "src" / "tw.css"),
+                "-o",
+                str(settings.STATIC_DIR / "css" / "main.css"),
+            ]
+        )
     except Exception as e:
         print(f"Error running tailwindcss: {e}")
 

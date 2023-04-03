@@ -12,8 +12,10 @@ templates = Jinja2Blocks(directory=settings.TEMPLATE_DIR)
 
 router = APIRouter()
 
+
 class Search(BaseModel):
     search: str | None = None
+
 
 @router.get("/")
 def index(request: Request):
@@ -23,13 +25,13 @@ def index(request: Request):
     random_artist = db.get_random_item()
 
     return templates.TemplateResponse(
-            "main.html",
-            {
-                "request": request,
-                "artist_count": len(db.all_items()),
-                "random_artist": random_artist,
-            }
-        )
+        "main.html",
+        {
+            "request": request,
+            "artist_count": len(db.all_items()),
+            "random_artist": random_artist,
+        },
+    )
 
 
 @router.get("/about")
@@ -57,7 +59,7 @@ def catalog(request: Request):
         for member in all_members:
             if member["active"]:
                 active_members.append(member["name"])
-        return active_members # limit 14 members
+        return active_members  # limit 14 members
 
     def get_website(artist: dict):
         if "urls" not in artist:
@@ -83,25 +85,25 @@ def catalog(request: Request):
                 "artist": artist[0],
                 "get_website": get_website,
                 "get_profile": get_profile,
-            }
+            },
         )
 
     return templates.TemplateResponse(
-            "catalog.html",
-            {
-                "request": request,
-                "artists": artists,
-                "get_members": get_members,
-                "get_website": get_website,
-            }
-        )
+        "catalog.html",
+        {
+            "request": request,
+            "artists": artists,
+            "get_members": get_members,
+            "get_website": get_website,
+        },
+    )
+
 
 @router.get("/profile")
 def profile(request: Request):
     """Profile page - display information about a specific artist."""
 
     # db = CRUD().with_table("artist_details")
-
 
     if request.headers.get("hx-request"):
         pass
@@ -116,15 +118,8 @@ def search(request: Request):
     results = []
 
     return templates.TemplateResponse(
-        "search.html",
-        {
-            "request": request,
-            "results": results
-        },
-        block_name=block_name
+        "search.html", {"request": request, "results": results}, block_name=block_name
     )
-
-
 
 
 @router.post("/search")
@@ -137,9 +132,10 @@ def search_post(request: Request, search: Annotated[str, Form()]):
 
     db = CRUD().with_table("artist_details")
     # block_name = "artist_card"
-    results=[]
+    results = []
     artists = db.search(key="name", value=search)
     print(artists)
+
     def get_members(artist: dict):
         """This returns active members from the artist_details table. This
         method can be used within the Jinja template."""
@@ -151,7 +147,7 @@ def search_post(request: Request, search: Annotated[str, Form()]):
         for member in all_members:
             if member["active"]:
                 active_members.append(member["name"])
-        return active_members # limit 14 members
+        return active_members  # limit 14 members
 
     def get_website(artist: dict):
         if "urls" not in artist:
@@ -166,7 +162,6 @@ def search_post(request: Request, search: Annotated[str, Form()]):
             "artists": artists,
             "get_website": get_website,
             "get_members": get_members,
-
         },
-        block_name=block_name
+        block_name=block_name,
     )

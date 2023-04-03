@@ -43,7 +43,3 @@ class Settings(BaseSettings):
                 }
             )
         return fastapi_kwargs
-
-
-
-
