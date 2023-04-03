@@ -28,21 +28,5 @@ jobs:
           pip install ruff black
       - name: Run ruff and black
         run: |
-          ruff app --fix
-          black .
-      - name: commit changes
-        run: |
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git add .
-          git commit -m "Linting ${{ github.event_name }}"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GH_PAT}}
-          branch: ${{ github.ref }}
+          ruff app
+          black . --check
