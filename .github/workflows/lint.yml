@@ -25,5 +25,17 @@ jobs:
           pip install ruff black
       - name: Run ruff and black
         run: |
-          ruff
-          black --check .
+          ruff app --fix
+          black .
+      - name: commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "fix: linting"
+          commit_options: "--no-verify"
+          commit_user_name: "GitHub Actions"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "GitHub Actions <github-actions[bot]@users.noreply.github.com>"
+      - name: Check if there are any remaining changes
+        run: |
+          ruff  app/ 
+          black . --check
