@@ -33,10 +33,13 @@ jobs:
           ruff app --fix
           black .
       - name: commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "fix: linting"
-          commit_options: "--no-verify"
-          commit_user_name: "GitHub Actions"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_author: "GitHub Actions <github-actions[bot]@users.noreply.github.com>"
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add .
+          git commit -m "Linting ${github.event_name}"
+          git push
