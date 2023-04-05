@@ -13,8 +13,10 @@
                 <p class="py-2 text-center"><a href="/" class="py-1 px-2 rounded-md bg-cyan-800 text-slate-50 hover:bg-cyan-500">Randomize!</a></p>
             </div>
             <div class="flex flex-col justify-center content-center text-center">
-                <img src="{{random_artist['cover_image']}}" />
-                <span class="py-4 uppercase font-bold">{{random_artist["name"]}}</span>
+                {% if 'images' in random_artist %}
+                <img src="{{random_artist['images'][0]['resource_url']}}" />
+                {% endif %}
+                <span class="py-4 uppercase font-bold">{{random_artist['name']}}</span>
             </div>
         </div>
     </section>

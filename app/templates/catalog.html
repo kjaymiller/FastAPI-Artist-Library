@@ -1,31 +1,35 @@
 {% extends "/shared/_base.html" %}
 
 {% block content %}
-    <section id="body" class="flex flex-col bg-slate-50 justify-center items-center max-w-screen-lg m-auto">
-        <div class="flex flex-col justify-center items-center py-10 min-w-full">
-            <h2 class="text-2xl leading-relaxed text-slate-800 uppercase">Catalog</h2>
-            <div id="main-info" class="flex flex-col px-24 py-6">
-                <p class="py-2">Take a gander at some of my favorite artists...</p>
+
+    <section id="body" class="bg-slate-50 justify-center items-center max-w-screen-lg m-auto">
+        <div class="px-3 first-letter:py-10">
+            <h2 class="text-4xl font-bold leading-relaxed text-slate-800 uppercase">Catalog</h2>
+                <p class="py-2">Check out some of my favorite artists...</p>
                 </p>
                 <p class="py-2">I currently have {{artists|length}} artists saved.</p>
-            </div>
+        </div>
             {% block artist_card %}
-            <div class="flex flex-rown gap-2 flex-wrap justify-center content-center text-center w-full">
-                {% for artist in artists %}
-                <div id="{{artist['id']}}" class="flex flex-col bg-slate-200 hover:bg-teal-100 transition-colors ease-in-out rounded-lg content-center text-center basis-1/4 w-full h-72"
-                     hx-get="/catalog"
-                     hx-swap="outerHTML">
-                    <span class="py-1 uppercase font-bold"><a href="{{get_website(artist)}}" class="text-cyan-800 hover:text-cyan-600">{{artist["name"]}}</a></span>
-                    <span class="px-1 text-xs text-slate-500 font-bold uppercase">Members</span>
-                    <div id="hello" class="flex flex-col flex-wrap h-5/6 py-2">
-                    {% for member in get_members(artist) %}
-                        <span class="px-1 text-sm text-slate-600">{{member}}</span>
-                    {% endfor %}
-                    </div>
+        <div class="grid grid-cols-4 grid-flow-row auto-rows-max gap-4">
+            {% for artist in artists %}
+            {% if 'name' in artist %}
+            <div id="{{artist.doc_id}}" class="h-72 bg-slate-200 hover:bg-teal-100 transition-colors ease-in-out rounded-lg content-center text-center"
+                    hx-get="/profile"
+                    hx-swap="outerHTMLinnerHTML"
+                    hx-target="#user-profile">
+                <span class="py-1 uppercase font-bold"><a href="{{get_website(artist)}}" class="text-cyan-800 hover:text-cyan-600">{{artist["name"]}}</a></span>
+                <div class="overflow-hidden h-64">
+                    <img src="{{artist['images'][0]['resource_url']}}" class="p-2 m-auto max-h-72">
+                </div> 
                 </div>
-                {% endfor %}
+            {% endif %}
+            {% endfor %}
+                </div>
+                {% endblock %}
             </div>
-            {% endblock %}
+    </section>
+    <section class="z-10 top-20 w-full center absolute mx-auto text-white">
+        <div id="user-profile">
         </div>
     </section>
 {% endblock %}

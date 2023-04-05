@@ -1,3 +1,4 @@
+python-dotenv
 python3-discogs-client
 fastapi[all]
 jinja2

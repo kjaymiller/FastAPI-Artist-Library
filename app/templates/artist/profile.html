@@ -1,10 +1,24 @@
-<div id="profile-{{artist['id']}}" class="flex flex-col bg-slate-200 hover:bg-teal-100 transition-colors ease-in-out rounded-lg content-center text-center w-1/4 h-72 pb-2"
-                     hx-get="/catalog" hx-target="html">
-<span class="py-1 uppercase font-bold"><a href="{{get_website(artist)}}" class="text-cyan-800 hover:text-cyan-600">{{artist["name"]}}</a></span>
-<span class="px-1 text-xs text-slate-500 font-bold uppercase">Profile</span>
-<div class="flex flex-col my-2 h-full w-full overflow-y-auto overflow-x-clip">
-<p class="text-xs text-slate-600 h-full px-2 w-full">{{get_profile(artist)|safe}}</p>
-</div>
-<p class="text-xs uppercase text-slate-600"><a href="{{get_website(artist)}}">more info</a></p>
-
+<div id="user-profile">
+<div id="profile-{{artist['id']}}" class="flex flex-col bg-slate-200 hover:bg-teal-100 transition-colors ease-in-out rounded-lg content-center text-center h-1/2 pb-2">
+    <button id="close" class="rounded bg-slate-500">Close</button>
+    <span class="py-1 uppercase font-bold"><a href="{{get_website(artist)}}" class="text-cyan-800 hover:text-cyan-600">{{artist["name"]}}</a></span>
+    <img src="{{artist['images'][0]['resource_url']}}" class="p-2 m-auto overflow-hidden">
+    <div class="flex flex-col my-2 h-full w-full overflow-y-auto overflow-x-clip">
+    {% set members = get_members(artist) %}
+    {% if members|length > 1%}
+    <h3 class="px-1 text-xs text-slate-500 font-bold uppercase">Members</h3>
+    <div id="hello" class="flex flex-col flex-wrap h-5/6 py-2">
+        {% for member in members %}
+            <span class="px-1 text-sm text-slate-600">{{member}}</span>
+        {% endfor %}
+    </div>
+    {%endif %}
+    <span class="px-1 text-xs text-slate-500 font-bold uppercase">Profile</span>
+    <p class="text-sm text-slate-600 h-full px-2 w-full">{{get_profile(artist)|safe}}</p>
+    </div>
+    <p class="text-sm uppercase text-slate-600"><a href="{{get_website(artist)}}">more info</a></p>
+    <script type="text/javascript">
+        document.getElementById("close").addEventListener(
+            "click", function () {document.getElementById("user-profile").outerHTML= `<div id="user-profile"></div>`});
+    </script>
 </div>
