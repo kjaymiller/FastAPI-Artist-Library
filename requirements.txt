@@ -1,6 +1,7 @@
 python-dotenv
 python3-discogs-client
 fastapi[all]
+uvicorn
 jinja2
 jinja2-fragments
 python-multipart

@@ -28,7 +28,7 @@ module web 'core/host/appservice.bicep' = {
     location: location
     tags: union(tags, { 'azd-service-name': 'app' })
     appServicePlanId: appServicePlan.outputs.id
-    appCommandLine: 'uvicorn app.main:app --host 0.0.0.0'
+    appCommandLine: 'python -m uvicorn app.main:app --host 0.0.0.0'
     runtimeName: 'python'
     runtimeVersion: '3.11'
     scmDoBuildDuringDeployment: true
